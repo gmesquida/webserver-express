@@ -3,6 +3,7 @@ const hbs = require('hbs');
 const app = express()
 
 require('./hbs/helpers')
+require('dotenv').config();
 
 const port = process.env.PORT || 3000;
 
@@ -12,10 +13,8 @@ app.use(express.static(__dirname + '/public'))
 // Registramos los parciales
 hbs.registerPartials(__dirname + '/views/partials', (err) => {});
 
-// Express HBS Engine
-app.set('view engine', 'hbs');
-
-
+// Opción 1: utilizamos Express HBS Engine para generar páginas
+/*app.set('view engine', 'hbs');
 
 app.get('/', (req, res) => {
 
@@ -31,6 +30,12 @@ app.get('/about', (req, res) => {
         title: 'About'
     });
 
+})*/
+
+// Opción 2: Desplegando una aplicación con el http_server de angular o react
+
+app.get('*', (req, res) => {
+    res.sendFile(__dirname + 'public/index.html')
 })
 
 
